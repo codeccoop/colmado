@@ -1,0 +1,25 @@
+---
+layout: compress
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{{ page.title }}</title>
+
+    <link rel="stylesheet" href="{{ base.url }}/assets/css/styles.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ base.url }}/assets/images/favicons/32x32.png"
+    />
+  </head>
+  <body>
+    <header id="mainHeader">{% include header.html %}</header>
+    <main class="{{ page.page }}">{{ content }}</main>
+    <footer id="mainFooter">{% include footer.html %}</footer>
+  </body>
+</html>

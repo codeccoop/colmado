@@ -1,0 +1,48 @@
+<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a aria-label="Inici" class="navbar-item" data-id="home" href="/#home">
+      <picture>
+        <source srcset="{{ base.url }}/assets/images/logo-colmado.png" type="image/png" />
+        <img
+          src="{{ base.url }}/assets/images/logo-colmado.webp"
+          type="image/webp"
+          alt="Logotip"
+        />
+      </picture>
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="navbarMenu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
+
+  <div id="navbarMenu" class="navbar-menu">
+    <div class="navbar-start">
+      {% assign links = site.data.navigation %} {% for item in links %} {% if
+      item.dropdown %}
+      <div data-id="{{ item.id }}" class="navbar-item has-dropdown is-hoverable">
+        <a href="{{ item.link }}" class="navbar-link is-arrowless">{{ item.name }}</a>
+        <div class="navbar-dropdown">
+          {% for subitem in item.dropdown %}
+          <a data-id="{{ subitem.id }}" class="navbar-item" href="{{ subitem.link }}"
+            >{{ subitem.name }}</a
+          >
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+      <a data-id="{{ item.id }}" class="navbar-item" href="{{ item.link }}"
+        >{{ item.name }}</a
+      >
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+</nav>
