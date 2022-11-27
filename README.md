@@ -25,12 +25,16 @@ You can use colmado on your own way, but for terms of scalability and modularity
 
 ## Usage
 
+### The store
+
 To start with colmado, you have to create your store. Let's do it
 
 ```javascript
 import { createStore } from "colmado";
 const Store = createStore();
 ```
+
+### The store modules
 
 Easy! But your store is empty. So, lets create one module.
 
@@ -47,7 +51,11 @@ const storeModules = [myModule]
 const Store = createStore(storeModules);
 ```
 
-Now you have your **warehouse** where you can store your data, but nobody is dispatching orders. The store isolate your state from the rest of your application into its warehouses and only allows you to place orders to the **dispatcher**. To be able to dispatch orders, you have to define your **reducer**. So, let's go.
+Now you have your **warehouse** where you can store your data, but nobody is dispatching orders. 
+
+### Reducers
+
+The store isolate your state from the rest of your application into its warehouses and only allows you to place orders to the **dispatcher**. To be able to dispatch orders, you have to define your **reducer**. So, let's go.
 
 ```javascript
 const myModule = {
@@ -64,6 +72,8 @@ const myModule = {
   }
 }
 ```
+
+### Hook and dispatch
 
 And your colmado store is ready to open its doors. You only have to wrap your react components with the store and use the **useStore** hook to access the warehouse data and the dispatcher.
 
