@@ -14,7 +14,7 @@ export default {
   },
   plugins: [
     replace({ "process.env.NODE_ENV": JSON.stringify(NODE_ENV) }),
-    babel({ exclude: "node_modules/**", runtimeHelpers: true }),
+    babel({ exclude: "node_modules/**" }),
     uglify(),
   ],
   external: (id) => /^react/.test(id),
