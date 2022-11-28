@@ -12,7 +12,7 @@ Insted of a framework, it's an architectonic proposal with two helper functions:
 
 ## Code structure
 
-You can use colmado on your own way, but for terms of scalability and modularity, we propose the following directory structure.
+You can use colmado in your own way –all together in a flat file or scattered throughout your components–, but to ensure scalability and modularity, we propose the following directory structure.
 
 ```bash
 ├── index.js # Your app root
