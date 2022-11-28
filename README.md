@@ -41,17 +41,17 @@ Easy! But your store is empty. So, lets create one module.
 ```javascript
 const myModule = {
   name: "names",
-  Component: ({ warehouse, children }) => {
+  Component: ({ Warehouse, children }) => {
     const [state, setState] = useState();
-    return <warehouse.Provider value={[state, setState]}>{children}</warehouse.Provider>;
-  }
-}
+    return <Warehouse value={[state, setState]}>{children}</Warehouse>;
+  },
+};
 
-const storeModules = [myModule]
+const storeModules = [myModule];
 const Store = createStore(storeModules);
 ```
 
-Now you have your **warehouse** where you can store your data, but nobody is dispatching orders. 
+Now you have your **warehouse** where you can store your data, but nobody is dispatching orders.
 
 ### Reducers
 
@@ -60,17 +60,17 @@ The store isolate your state from the rest of your application into its warehous
 ```javascript
 const myModule = {
   name: "names",
-  Component: ({ warehouse, children }) => {
+  Component: ({ Warehouse, children }) => {
     const [state, setState] = useState("Garfield");
-    return <warehouse.Provider value={[state, setState]}>{children}</warehouse.Provider>;
+    return <Warehouse value={[state, setState]}>{children}</Warehouse>;
   },
   reducer: ({ state, action, payload }) => {
     switch (action) {
       case "SET_NAME":
         return payload;
     }
-  }
-}
+  },
+};
 ```
 
 ### Hook and dispatch
@@ -83,27 +83,31 @@ import Store from "./store";
 
 function SayHelloTo() {
   const [store, dispatch] = useStore();
-  
+
   function setName(ev) {
     const value = ev.currentTarget.name;
     dispatch({
       action: "SET_NAME",
-      payload: value
+      payload: value,
     });
   }
-  
-  return (<>
-    <select onChange={setName}>
-      <option value="Gargamel">Gargamel</option>
-      <option value="Suneo">Suneo</option>
-    </select>
-    <p>Hello, {store.name}!</p>
-  </>);
+
+  return (
+    <>
+      <select onChange={setName}>
+        <option value="Gargamel">Gargamel</option>
+        <option value="Suneo">Suneo</option>
+      </select>
+      <p>Hello, {store.name}!</p>
+    </>
+  );
 }
 
-function App () {
-  return (<Store>
-    <SayHelloTo />
-  </Store>);
+function App() {
+  return (
+    <Store>
+      <SayHelloTo />
+    </Store>
+  );
 }
 ```

@@ -12,10 +12,9 @@ function moduleBoilerplate(module) {
 }
 
 function getStore() {
-  const warehouses = storeModules
-    .map((module) => {
-      return [module.name, useContext(module.warehouse)];
-    });
+  const warehouses = storeModules.map((module) => {
+    return [module.name, useContext(module.warehouse)];
+  });
 
   return Object.fromEntries(warehouses);
 }
@@ -25,7 +24,7 @@ function renderStore({ modules, children }) {
   const store = getStore();
   return modules.reverse().reduce((children, module) => {
     return (
-      <module.Component store={store} warehouse={module.warehouse.Provider}>
+      <module.Component store={store} Warehouse={module.warehouse.Provider}>
         {children ? children : void 0}
       </module.Component>
     );
@@ -63,7 +62,9 @@ export function useStore() {
         const [state, setState] = store[name];
         try {
           const newState = reducer({ state, action, payload });
-          if (newState !== void 0 && newState !== state && typeof setState === "function") setState(newState);
+          if (newState !== void 0 && newState !== state) {
+            typeof setState === "function" && setState(newState);
+          }
         } catch (err) {
           console.error(err);
         }
