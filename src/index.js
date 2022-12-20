@@ -2,12 +2,22 @@ import React, { createContext, useContext } from "react";
 
 const storeModules = [];
 
+function noop() {}
+
+function warehouseProxy(warehouse) {
+  if (Array.isArray(warehouse)) {
+    return warehouse;
+  }
+
+  return [warehouse, noop];
+}
+
 function moduleBoilerplate(module) {
   module = { ...module };
   if (!module.name) throw new Error("Unamed store module");
-  module.warehouse = module.warehouse || createContext([{}, () => {}]);
+  module.warehouse = module.warehouse || createContext([null, noop]);
   module.Component = module.Component || Fragment;
-  module.reducer = module.reducer || (() => {});
+  module.reducer = module.reducer || noop;
   return module;
 }
 
@@ -22,7 +32,7 @@ function getStore() {
 // Return the store modules components recursively nesteds
 function renderStore({ modules, children }) {
   const store = getStore();
-  return modules.reverse().reduce((children, module) => {
+  return modules.reduce((children, module) => {
     return (
       <module.Component store={store} Warehouse={module.warehouse.Provider}>
         {children ? children : void 0}
@@ -52,14 +62,15 @@ export function useStore() {
   return [
     // Store state
     Object.fromEntries(
-      Object.entries(store).map(([name, [warehouse]]) => {
-        return [name, warehouse];
+      Object.entries(store).map(([name, warehouse]) => {
+        const [state] = warehouseProxy(warehouse);
+        return [name, state];
       })
     ),
     // Store dispatcher
     ({ action, payload }) => {
       storeModules.forEach(({ name, reducer }) => {
-        const [state, setState] = store[name];
+        const [state, setState] = warehouseProxy(store[name]);
         try {
           const newState = reducer({ state, action, payload });
           if (newState !== void 0 && newState !== state) {
