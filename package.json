@@ -1,6 +1,6 @@
 {
   "name": "colmado",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Uncompliacted store and minimal flux implementation with react contexts",
   "main": "dist/index.js",
   "scripts": {
